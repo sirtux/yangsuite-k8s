@@ -1,0 +1,6 @@
+yangsuite[core]~=3.0.3
+yangsuite-netconf
+yangsuite-restconf
+yangsuite-grpc-telemetry
+yangsuite-coverage
+yangsuite-gnmi
