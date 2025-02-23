@@ -1,0 +1,20 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: yangsuite-ingressroute
+  namespace: yangsuite
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - kind: Rule
+    match: Host(`yangsuite.{{ .Values.cluster | replace "cluster-" "" }}.wirkbetrieb.net`)
+    priority: 10
+    services:
+    - kind: Service
+      name: yangsuite-web
+      namespace: yangsuite
+      passHostHeader: true
+      port: 80
+  tls:
+    certResolver: letsencrypt

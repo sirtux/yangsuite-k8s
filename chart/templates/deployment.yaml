@@ -1,0 +1,46 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: yangsuite
+  namespace: yangsuite
+  labels:
+    app.kubernetes.io/name: yangsuite
+    app.kubernetes.io/instance: yangsuite
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: yangsuite
+      app.kubernetes.io/instance: yangsuite
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: yangsuite
+        app.kubernetes.io/instance: yangsuite
+    spec:
+      securityContext:
+        fsGroup: 999
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: yangsuite
+          tty: true
+          image: ghcr.io/sirtux/yangsuite:{{ .Values.yangsuite.version }}
+          imagePullPolicy: Always
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: false
+            runAsGroup: 999
+            runAsUser: 999
+          command:
+            - yangsuite
+          ports:
+            - name: "http"
+              containerPort: 8080

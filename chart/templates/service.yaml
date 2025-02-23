@@ -1,0 +1,19 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: yangsuite-web
+  namespace: "yangsuite"
+  labels:
+    app.kubernetes.io/name: yangsuite
+    app.kubernetes.io/instance: yangsuite
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: "TCP"
+      port: 80
+      targetPort: "http"
+      name: "http"
+  selector:
+    app.kubernetes.io/name: yangsuite
+    app.kubernetes.io/instance: yangsuite
