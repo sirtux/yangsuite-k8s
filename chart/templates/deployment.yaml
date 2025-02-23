@@ -26,6 +26,34 @@ spec:
         fsGroup: 999
         seccompProfile:
           type: RuntimeDefault
+      initContainers:
+        - name: yangsuite
+          tty: true
+          image: ghcr.io/sirtux/yangsuite:{{ .Values.yangsuite.version }}
+          imagePullPolicy: Always
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: false
+            runAsGroup: 999
+            runAsUser: 999
+          env:
+            - name: DJANGO_ALLOWED_HOSTS
+              value: "yangsuite.{{ .Values.cluster | replace "cluster-" "" }}.wirkbetrieb.net"
+            - name: YANGSUITE_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: yangsuite-db-app
+                  key: password
+            - name: YANGSUITE_DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: yangsuite-db-app
+                  key: host
+          command:
+            - yangsuite -c
       containers:
         - name: yangsuite
           tty: true
@@ -53,7 +81,7 @@ spec:
                   name: yangsuite-db-app
                   key: host
           command:
-            - yangsuite
+            - uwsgi ~/uwsgi.ini
           ports:
             - name: "http"
               containerPort: 8080
