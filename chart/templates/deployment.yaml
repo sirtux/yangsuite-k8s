@@ -53,7 +53,8 @@ spec:
                   name: yangsuite-db-app
                   key: host
           command:
-            - yangsuite -c
+            - yangsuite
+            - -c
       containers:
         - name: yangsuite
           tty: true
@@ -81,7 +82,8 @@ spec:
                   name: yangsuite-db-app
                   key: host
           command:
-            - uwsgi ~/uwsgi.ini
+            - uwsgi
+            - ~/uwsgi.ini
           ports:
             - name: "http"
               containerPort: 8080
