@@ -1,0 +1,30 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: yangsuite-db
+  namespace: yangsuite
+spec:
+  instances: 1
+  imageCatalogRef:
+    apiGroup: postgresql.cnpg.io
+    kind: ImageCatalog
+    name: postgresql
+    major: 16
+  storage:
+    size: 2Gi
+  bootstrap:
+    initdb:
+      database: yangsuite
+      owner: yangsuite
+  monitoring:
+    enablePodMonitor: true
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: ImageCatalog
+metadata:
+  name: postgresql
+  namespace: yangsuite
+spec:
+  images:
+    - major: 16
+      image: ghcr.io/cloudnative-pg/postgresql:16.3
