@@ -52,6 +52,9 @@ spec:
                 secretKeyRef:
                   name: yangsuite-db-app
                   key: host
+          volumeMounts:
+            - name: "yangsuite-static"
+              mountPath: "/opt/yangsuite/.local/share/yangsuite/static"
           command:
             - yangsuite
             - -c
@@ -81,9 +84,15 @@ spec:
                 secretKeyRef:
                   name: yangsuite-db-app
                   key: host
+          volumeMounts:
+            - name: "yangsuite-static"
+              mountPath: "/opt/yangsuite/.local/share/yangsuite/static"
           command:
             - uwsgi
             - /opt/yangsuite/uwsgi.ini
           ports:
             - name: "http"
               containerPort: 8080
+      volumes:
+        - name: "yangsuite-static"
+          emptyDir: {}
