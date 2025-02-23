@@ -37,6 +37,7 @@ spec:
               drop:
               - ALL
             readOnlyRootFilesystem: false
+            fsGroup: 999
             runAsGroup: 999
             runAsUser: 999
           env:
@@ -69,6 +70,7 @@ spec:
               drop:
               - ALL
             readOnlyRootFilesystem: false
+            fsGroup: 999
             runAsGroup: 999
             runAsUser: 999
           env:
