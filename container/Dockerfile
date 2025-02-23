@@ -21,6 +21,8 @@ RUN pip install -r requirements.txt
 
 RUN mkdir -p /opt/yanguite/.config/yangsuite
 RUN mkdir -p /opt/yangsuite/cache
+RUN mkdir -p /opt/yangsuite/uwsgi/
 COPY yangsuite.ini /opt/yanguite/.config/yangsuite/
 COPY production.py /opt/yangsuite/.venv/lib/python3.10/site-packages/yangsuite/settings/production.py
+COPY uwsgi.ini /opt/yangsuite/
 CMD ["sleep", "infinity"]
