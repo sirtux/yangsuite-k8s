@@ -25,4 +25,8 @@ RUN mkdir -p /opt/yangsuite/uwsgi/
 COPY yangsuite.ini /opt/yangsuite/.config/yangsuite/
 COPY production.py /opt/yangsuite/.venv/lib/python3.10/site-packages/yangsuite/settings/production.py
 COPY uwsgi.ini /opt/yangsuite/
+RUN mkdir -p /opt/yangsuite/.local/share/yangsuite/
+USER root
+RUN chown -R yangsuite:yangsuite /opt/yangsuite
+USER yangsuite
 CMD ["sleep", "infinity"]
