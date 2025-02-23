@@ -85,9 +85,12 @@ spec:
                 secretKeyRef:
                   name: yangsuite-db-app
                   key: host
+          workingDir: /opt/yangsuite
           volumeMounts:
             - name: "yangsuite-static"
               mountPath: "/opt/yangsuite/.local/share/yangsuite/static"
+            - name: "yangsuite-cache"
+              mountPath: "/opt/yangsuite/cache"
           command:
             - uwsgi
             - /opt/yangsuite/uwsgi.ini
@@ -96,4 +99,8 @@ spec:
               containerPort: 8080
       volumes:
         - name: "yangsuite-static"
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: yangsuite-static-pvc
+        - name: "yangsuite-cache"
+          persistentVolumeClaim:
+            claimName: yangsuite-cache-pvc
