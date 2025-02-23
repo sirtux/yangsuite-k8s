@@ -27,7 +27,7 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       initContainers:
-        - name: yangsuite
+        - name: yangsuite-init
           tty: true
           image: ghcr.io/sirtux/yangsuite:{{ .Values.yangsuite.version }}
           imagePullPolicy: Always
