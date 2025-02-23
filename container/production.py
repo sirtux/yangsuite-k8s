@@ -5,7 +5,11 @@ import os
 from yangsuite.settings.base import *     # noqa
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'you-need-to-set-this')
+
+if 'YANGSUITE_DB_PASSWORD' in os.environ:
+    SECRET_KEY = os.environ['YANGSUITE_DB_PASSWORD']
+else:
+    raise(Exception('YANGSUITE_DB_PASSWORD not set'))
 
 DEBUG = False
 
@@ -34,15 +38,16 @@ DATABASE_DEFAULT = {
         'timeout': 180
     }
 }
+
 DATABASE_POSTGRESQL = {
     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    'NAME': 'yangsuite_db',
-    'USER': 'ysadmin',
-    'PASSWORD': 'ysadmin',
-    'HOST': 'localhost',
-    'PORT': '5432',
+    'NAME': 'yangsuite',
+    'USER': 'yangsuite',
+    'PASSWORD': os.getenv('YANGSUITE_DB_PASSWORD'),
+    'HOST': os.getenv('YANGSUITE_DB_HOST'),
+    'PORT': os.getenv('YANGSUITE_DB_RW_SERVICE_PORT'),
 }
 
 DATABASES = {
-    'default': DATABASE_DEFAULT
+    'default': DATABASE_POSTGRESQL
 }
