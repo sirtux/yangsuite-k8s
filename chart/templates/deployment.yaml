@@ -24,6 +24,7 @@ spec:
     spec:
       securityContext:
         fsGroup: 999
+        fsGroupChangePolicy: "Always"
         seccompProfile:
           type: RuntimeDefault
       initContainers:
@@ -37,7 +38,6 @@ spec:
               drop:
               - ALL
             readOnlyRootFilesystem: false
-            fsGroup: 999
             runAsGroup: 999
             runAsUser: 999
           env:
@@ -70,7 +70,6 @@ spec:
               drop:
               - ALL
             readOnlyRootFilesystem: false
-            fsGroup: 999
             runAsGroup: 999
             runAsUser: 999
           env:
